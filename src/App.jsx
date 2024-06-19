@@ -1,38 +1,45 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import { BeatLoader } from "react-spinners";
 
 const App = () => {
-  const [formData, setFormData] = useState({ language: "Hindi", message: "" });
+  const [formData, setFormData] = useState({ language: "French", message: "" });
   const [error, setError] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [translation, setTranslation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const configuration = new Configuration({
-    apiKey: import.meta.env.VITE_OPENAI_KEY,
+  const key = import.meta.env.VITE_OPENAI_KEY;
+
+  const openai = new OpenAI({
+    apiKey: key,
+    dangerouslyAllowBrowser: true, // This is the default and can be omitted
   });
-  const openai = new OpenAIApi(configuration);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError("");
   };
-
   const translate = async () => {
     const { language, message } = formData;
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: `Translate this into ${language}: ${message}`,
+    const response = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: `Translate this into ${language}: ${message}`,
+        },
+      ],
+      model: "gpt-3.5-turbo",
       temperature: 0.3,
       max_tokens: 100,
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
     });
-
-    const translatedText = response.data.choices[0].text.trim();
+    console.log(response);
+    console.log(response.choices);
+    const translatedText = response.choices[0].message.content.trim();
     setIsLoading(false);
     setTranslation(translatedText);
   };
@@ -63,19 +70,20 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Translation</h1>
+      <h1 className="text-3xl font-bold">Translation</h1>
 
       <form onSubmit={handleOnSubmit}>
         <div className="choices">
           <input
+            className="box-border hover:box-content"
             type="radio"
-            id="hindi"
+            id="french"
             name="language"
-            value="Hindi"
+            value="French"
             defaultChecked={formData.language}
             onChange={handleInputChange}
           />
-          <label htmlFor="hindi">Hindi</label>
+          <label htmlFor="french">French</label>
 
           <input
             type="radio"
@@ -85,6 +93,25 @@ const App = () => {
             onChange={handleInputChange}
           />
           <label htmlFor="spanish">Spanish</label>
+
+          <input
+            className="box-border hover:box-content"
+            type="radio"
+            id="portuguese"
+            name="language"
+            value="Portuguese"
+            onChange={handleInputChange}
+          />
+          <label htmlFor="portuguese">Portuguese</label>
+
+          <input
+            type="radio"
+            id="italian"
+            name="language"
+            value="Italian"
+            onChange={handleInputChange}
+          />
+          <label htmlFor="italian">Italian</label>
 
           <input
             type="radio"
@@ -104,7 +131,9 @@ const App = () => {
 
         {error && <div className="error">{error}</div>}
 
-        <button type="submit">Translate</button>
+        <button type="submit" className="dark:md:hover:bg-fuchsia-600">
+          Translate
+        </button>
       </form>
 
       <div className="translation">
