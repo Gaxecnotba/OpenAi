@@ -6,7 +6,7 @@ const router = express.Router();
 const openai = new OpenAI({
   apiKey:
     process.env.OPENAI_API_KEY ||
-    "sk-proj-5hk6KSWAmYZkwLcuBuYyT3BlbkFJSNQW9ekhUeCl78LX33Ml",
+    "sk-proj-UshssxCUzfHhdcY6GKJKT3BlbkFJNCvJWUaUSuE1Q7gVhhwB",
 });
 
 // Root route
