@@ -18,16 +18,19 @@
     "url": "https://github.com/Gaxecnotba/OpenAi/issues"
   },
   "homepage": "https://github.com/Gaxecnotba/OpenAi#readme",
-  "description": "",
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21"
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.6"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "openai": "^4.51.0"
-  }
+    "openai": "^4.51.0",
+    "pg": "^8.12.0"
+  },
+  "keywords": [],
+  "description": ""
 }
