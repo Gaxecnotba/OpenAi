@@ -4,6 +4,13 @@ require("dotenv").config();
 
 const router = express.Router();
 
+const {
+  connectPosgrest,
+  saveTranslation,
+  getMessages,
+  insertMessage,
+} = require("../functions/TranslateF");
+
 const openai = new OpenAI({
   apiKey:
     process.env.OPENAI_API_KEY ||
