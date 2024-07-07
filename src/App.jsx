@@ -1,6 +1,6 @@
 import "./App.css";
 import Tranductor from "./screens/traductor";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./screens/home";
 import Contact from "./screens/contact";
