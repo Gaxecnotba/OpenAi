@@ -1,13 +1,11 @@
-// const { db } = require("./init");
+import dotenv from "dotenv";
+import pkg from "pg";
 
-// async function insertData(message) {
-//   const stmnt = db.prepare("INSERT INTO Messages(language, message) VALUES (?, ?)");
+dotenv.config();
 
-// }
-require("dotenv").config();
-const { Client } = require("pg");
+const { Client } = pkg;
 
-const connectPosgrest = async () => {
+export const connectPosgrest = async () => {
   const client = new Client({
     user: process.env.USER,
     password: process.env.PASSWORD,
@@ -19,7 +17,7 @@ const connectPosgrest = async () => {
   return client;
 };
 
-const getMessages = async () => {
+export const getMessages = async () => {
   const client = await connectPosgrest();
   try {
     const res = await client.query('SELECT * FROM "Chatgpt"."Translate"');
@@ -31,14 +29,10 @@ const getMessages = async () => {
   }
 };
 
-const insertMessage = async (message, translation, language) => {
+export const insertMessage = async (message, translation, language) => {
   const client = await connectPosgrest();
   try {
-    const query = `
-      INSERT INTO "Chatgpt"."Translate" (message, translation, language, timestamp)
-      VALUES ($1, $2, $3, NOW())
-      RETURNING *;
-    `;
+    const query = `INSERT INTO "Chatgpt"."Translate" ( message, translation, language) VALUES ($1, $2, $3) RETURNING *;`;
     const values = [message, translation, language];
     const res = await client.query(query, values);
     return res.rows[0];
@@ -49,7 +43,7 @@ const insertMessage = async (message, translation, language) => {
   }
 };
 
-const saveTranslation = async () => {
+export const saveTranslation = async () => {
   const message = "Hello, how are you?";
   const translation = "Bonjour, comment ça va?";
   const language = "French";
@@ -60,11 +54,4 @@ const saveTranslation = async () => {
   } catch (error) {
     console.error("Something happened when try to insert the message:", error);
   }
-};
-
-module.exports = {
-  connectPosgrest,
-  saveTranslation,
-  getMessages,
-  insertMessage,
 };

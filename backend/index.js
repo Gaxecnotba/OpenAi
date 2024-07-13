@@ -5,15 +5,21 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import openai from "./src/routers/openai.js";
+import postgres from "./src/routers/Postgres.js";
 
-const port = process.env.PORT || 3000;
+const port = process.env.GPORT || 3000;
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.json({ message: "Working" });
+});
+
 app.use("/", openai);
+app.use("/", postgres);
 
 app.all("*", (req, res) => {
   res.status(404).json({

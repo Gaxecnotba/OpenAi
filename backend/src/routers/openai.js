@@ -1,28 +1,17 @@
 import express from "express";
 import { OpenAI } from "openai";
-require("dotenv").config();
+import dotenv from "dotenv";
+import { insertMessage } from "../functions/TranslateF.js";
+dotenv.config();
 
 const router = express.Router();
-
-const {
-  connectPosgrest,
-  saveTranslation,
-  getMessages,
-  insertMessage,
-} = require("../functions/TranslateF");
 
 const openai = new OpenAI({
   apiKey:
     process.env.OPENAI_API_KEY ||
-    "sk-proj-UshssxCUzfHhdcY6GKJKT3BlbkFJNCvJWUaUSuE1Q7gVhhwB",
+    "sk-proj-nkTz7mS6cnXkHUU8vd2iT3BlbkFJKKN9R9qoJ50hP5rKc04x",
 });
 
-// Root route
-router.get("/", (req, res) => {
-  res.json({ message: "Working" });
-});
-
-// Example route for OpenAI translation
 router.get("/openAi/example", async (req, res) => {
   try {
     const response = await openai.chat.completions.create({
@@ -76,9 +65,9 @@ router.post("/api/translate", async (req, res) => {
     });
 
     console.log("API Response:", JSON.stringify(response, null, 2));
-
     if (response?.choices?.length > 0) {
       const translatedText = response.choices[0].message.content.trim();
+      await insertMessage(message, translatedText, language);
       res.json({ translatedText });
     } else {
       console.error("Unexpected API response structure:", response);
@@ -89,5 +78,4 @@ router.post("/api/translate", async (req, res) => {
     res.status(500).send("An error occurred while translating.");
   }
 });
-
 export default router;
