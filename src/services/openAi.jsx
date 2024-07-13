@@ -8,20 +8,23 @@ const openai = new OpenAI({
 });
 
 export async function getTranslation(language, message, model) {
-  const response = await openai.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: `Translate this into ${language}: ${message}`,
+  try {
+    const response = await fetch("http://localhost:3100/api/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    ],
-    model: "gpt-3.5-turbo",
-    temperature: 0.3,
-    max_tokens: 100,
-    top_p: 1.0,
-    frequency_penalty: 0.0,
-    presence_penalty: 0.0,
-  });
+      body: JSON.stringify({ language, message, model }),
+    });
 
-  return response.choices[0].message.content.trim();
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.translatedText;
+  } catch (error) {
+    console.error("Error fetching translation:", error);
+    throw error;
+  }
 }

@@ -5,9 +5,9 @@ import { copyToClipboard } from "../utils/copy";
 import Form from "../components/Form";
 export default function Tranductor() {
   const [formData, setFormData] = useState({
-    language: "French",
+    language: "",
     message: "",
-    model: "gpt-3.5-turbo",
+    model: "",
   });
   const [error, setError] = useState("");
   const [showNotification, setShowNotification] = useState(false);

@@ -1,16 +1,17 @@
 import express from "express";
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 import { insertMessage } from "../functions/TranslateF.js";
 dotenv.config();
 
 const router = express.Router();
 
 const openai = new OpenAI({
-  apiKey:
-    process.env.OPENAI_API_KEY ||
-    "sk-proj-nkTz7mS6cnXkHUU8vd2iT3BlbkFJKKN9R9qoJ50hP5rKc04x",
+  apiKey: process.env.OPENAI_API_KEY,
 });
+
+router.use(bodyParser.json());
 
 router.get("/openAi/example", async (req, res) => {
   try {
@@ -48,11 +49,11 @@ router.get("/openAi/example", async (req, res) => {
 });
 
 router.post("/api/translate", async (req, res) => {
-  const { language, message } = req.body;
+  const { language, message, model } = req.body;
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: model,
       messages: [
         {
           role: "user",
@@ -78,4 +79,5 @@ router.post("/api/translate", async (req, res) => {
     res.status(500).send("An error occurred while translating.");
   }
 });
+
 export default router;
