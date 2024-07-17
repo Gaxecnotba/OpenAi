@@ -20,7 +20,7 @@ export const connectPosgrest = async () => {
 export const getMessages = async () => {
   const client = await connectPosgrest();
   try {
-    const res = await client.query('SELECT * FROM "Chatgpt"."Translate"');
+    const res = await client.query('SELECT * FROM "public"."Translate"');
     return res.rows;
   } catch (err) {
     console.error("Error executing the query:", err);
@@ -32,7 +32,7 @@ export const getMessages = async () => {
 export const insertMessage = async (message, translation, language) => {
   const client = await connectPosgrest();
   try {
-    const query = `INSERT INTO "Chatgpt"."Translate" ( message, translation, language) VALUES ($1, $2, $3) RETURNING *;`;
+    const query = `INSERT INTO "public"."Translate" ( message, translation, language) VALUES ($1, $2, $3) RETURNING *;`;
     const values = [message, translation, language];
     const res = await client.query(query, values);
     return res.rows[0];
