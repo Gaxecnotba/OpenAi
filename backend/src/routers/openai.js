@@ -68,7 +68,7 @@ router.post("/api/translate", async (req, res) => {
     console.log("API Response:", JSON.stringify(response, null, 2));
     if (response?.choices?.length > 0) {
       const translatedText = response.choices[0].message.content.trim();
-      await insertMessage(message, translatedText, language);
+      await insertMessage(message, translatedText, language, model);
       res.json({ translatedText });
     } else {
       console.error("Unexpected API response structure:", response);
