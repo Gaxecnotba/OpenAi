@@ -11,7 +11,7 @@ export default function Form({ onSubmit, formData, setFormData, error }) {
           type="radio"
           id="chagpt-3"
           name="model"
-          value="gpt-3.5-turbo"
+          value="gpt-3.5-turbo-0125"
           defaultChecked={formData.model}
           onChange={handleInputChange}
         />
@@ -22,7 +22,7 @@ export default function Form({ onSubmit, formData, setFormData, error }) {
           type="radio"
           id="chagpt-4"
           name="model"
-          value="gpt-4"
+          value="gpt-4-0613"
           onChange={handleInputChange}
         />
         <label htmlFor="chagpt-4">chagpt-4</label>
