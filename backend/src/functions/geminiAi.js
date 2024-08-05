@@ -9,7 +9,7 @@ export async function translateText(text, language, version, languageselected) {
   const model = genAi.getGenerativeModel({
     model: version,
   });
-  const prompt = `Translate the following ${languageselected} text to ${language}: ${text}`;
+  const prompt = `Translate the following ${languageselected} text to ${language}: ${text}, just give the translation.`;
   try {
     const response = await model.generateContent(prompt);
     console.log(
