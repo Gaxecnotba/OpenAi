@@ -29,11 +29,25 @@ export const getMessages = async () => {
   }
 };
 
-export const insertMessage = async (message, translation, language, model) => {
+export const insertMessage = async (
+  message,
+  translation,
+  language,
+  model,
+  languageselected,
+  version
+) => {
   const client = await connectPosgrest();
   try {
-    const query = `INSERT INTO "Chatgpt"."Translate" ( message, language, translation, model) VALUES ($1, $2, $3, $4) RETURNING *;`;
-    const values = [message, language, translation, model];
+    const query = `INSERT INTO "Chatgpt"."Translate" ( message, language, translation, model, languageselected,version) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *;`;
+    const values = [
+      message,
+      language,
+      translation,
+      model,
+      languageselected,
+      version,
+    ];
     const res = await client.query(query, values);
     return res.rows[0];
   } catch (err) {
@@ -51,9 +65,11 @@ export const saveTranslation = async () => {
   try {
     const insertedMessage = await insertMessage(
       message,
-      translation,
       language,
-      model
+      translation,
+      model,
+      languageselected,
+      version
     );
     console.log("Message inserted:", insertedMessage);
   } catch (error) {

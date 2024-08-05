@@ -7,14 +7,26 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-export async function getTranslation(language, message, model) {
+export async function getTranslation(
+  language,
+  message,
+  model,
+  version,
+  languageselected
+) {
   try {
     const response = await fetch("http://localhost:3100/api/translate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ language, message, model }),
+      body: JSON.stringify({
+        language,
+        message,
+        model,
+        version,
+        languageselected,
+      }),
     });
 
     if (!response.ok) {

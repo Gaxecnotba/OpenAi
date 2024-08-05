@@ -54,6 +54,8 @@ h1 {
 .container .choices {
   display: flex;
   gap: 20px;
+  margin: auto;
+  width: 100%;
 }
 
 .container form input[type="radio"] {

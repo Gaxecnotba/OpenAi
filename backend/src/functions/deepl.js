@@ -3,8 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const authkey =
-  process.env.DEEPL_AUTH_KEY || "1447a693-e32d-5521-f9ae-10442fb4a1ab:fx";
+const authkey = process.env.DEEPL_AUTH_KEY;
 
 const translator = new deepl.Translator(authkey);
 
@@ -14,26 +13,26 @@ const translator = new deepl.Translator(authkey);
 // }
 // //translateText(text, input language "en" or "pt", output language can be"fr")
 // translateText();
+const languages = {
+  English: "en",
+  French: "fr",
+  Spanish: "es",
+  Italian: "it",
+  Portuguese_PT: "pt-PT", // European Portuguese
+  Portuguese_BR: "pt-BR", // Brazilian Portuguese
+  Portuguese: "pt",
+  Japanese: "ja",
+};
 
-export const getTranslation = async (language, message) => {
-  let target_lang;
-  if (language === "French") {
-    target_lang = "fr";
-  }
-  if (language === "Spanish") {
-    target_lang = "es";
-  }
-  if (language === "Italian") {
-    target_lang = "it";
-  }
-  if (language === "Portuguese") {
-    target_lang = "pt";
-  }
-  if (language === "Japanese") {
-    target_lang = "ja";
-  }
+export const getTranslation = async (language, message, languageselected) => {
+  const sourceLang = languages[languageselected];
+  const target_lang = languages[language];
   try {
-    const response = await translator.translateText(message, "en", target_lang);
+    const response = await translator.translateText(
+      message,
+      sourceLang,
+      target_lang
+    );
     return response.text;
   } catch (error) {
     console.error("Error fetching translation:", error);
