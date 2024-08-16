@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import openai from "./src/routers/openai.js";
 import postgres from "./src/routers/Postgres.js";
+import renderopenai from "./src/routers/PostgresRender.js";
 
 const port = process.env.GPORT || 3000;
 const app = express();
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", openai);
+app.use("/", renderopenai);
 app.use("/", postgres);
 
 app.all("*", (req, res) => {

@@ -11,21 +11,11 @@ export async function translateText(text, language, version, languageselected) {
   });
   const prompt = `Translate the following ${languageselected} text to ${language}: ${text}, just give the translation.`;
   try {
-    const response = await model.generateContent(prompt);
-    console.log(
-      "Response from GeminiAi API:",
-      JSON.stringify(response, null, 2)
-    );
+    const result = await model.generateContent(prompt);
+    console.log("Response from GeminiAi API:", JSON.stringify(result));
 
-    if (
-      response &&
-      response.response &&
-      response.response.candidates &&
-      response.response.candidates.length > 0
-    ) {
-      // Extrae el texto traducido del primer candidato
-      const translatedText =
-        response.response.candidates[0].content.parts[0].text;
+    if (result) {
+      const translatedText = result.response.text();
       return translatedText;
     } else {
       throw new Error(
