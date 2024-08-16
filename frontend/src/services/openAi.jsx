@@ -15,7 +15,7 @@ export async function getTranslation(
   languageselected
 ) {
   try {
-    const response = await fetch("http://localhost:3100/api/translate", {
+    const response = await fetch("http://localhost:3100/api/render/translate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
