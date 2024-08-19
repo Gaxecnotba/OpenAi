@@ -4,8 +4,8 @@ dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import openai from "./src/routers/openai.js";
-import postgres from "./src/routers/Postgres.js";
+// import openai from "./src/routers/openai.js";
+// import postgres from "./src/routers/Postgres.js";
 import renderopenai from "./src/routers/PostgresRender.js";
 
 const port = process.env.GPORT || 3000;
