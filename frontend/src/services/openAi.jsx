@@ -1,5 +1,7 @@
 import OpenAI from "openai";
 
+const backend_url = import.meta.env.VITE_BACKEND_URL;
+
 const key = import.meta.env.VITE_OPENAI_KEY;
 
 const openai = new OpenAI({
@@ -15,7 +17,7 @@ export async function getTranslation(
   languageselected
 ) {
   try {
-    const response = await fetch("http://localhost:3100/api/render/translate", {
+    const response = await fetch(`${backend_url}/api/render/translate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
