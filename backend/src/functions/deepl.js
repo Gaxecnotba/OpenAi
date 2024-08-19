@@ -7,12 +7,6 @@ const authkey = process.env.DEEPL_AUTH_KEY;
 
 const translator = new deepl.Translator(authkey);
 
-// async function translateText() {
-//   const result = await translator.translateText("Hello, world!", "en", "fr");
-//   console.log(result.text);
-// }
-// //translateText(text, input language "en" or "pt", output language can be"fr")
-// translateText();
 const languages = {
   English: "en",
   French: "fr",
