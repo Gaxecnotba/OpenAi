@@ -19,9 +19,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Working" });
 });
 
-app.use("/", openai);
+// app.use("/", openai);
 app.use("/", renderopenai);
-app.use("/", postgres);
+// app.use("/", postgres);
 
 app.all("*", (req, res) => {
   res.status(404).json({
